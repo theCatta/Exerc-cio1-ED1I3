@@ -1,0 +1,213 @@
+#include <iostream>
+
+#include <stdlib.h>
+
+#include <iomanip>
+
+#include <ostream>
+
+#include <fstream>
+
+using namespace std;
+
+
+
+#define LIN 15
+
+#define COL 40
+
+
+
+//Função de menu.
+
+int home(){
+
+	//Declaração de variáveis.
+
+	int key;
+
+	
+
+	//Instruções para usuário.
+
+	cout << "1. Reservar cadeira." << endl;
+
+	cout << "2. Mapa da sala." << endl;
+
+	cout << "3. Fatura." << endl;
+
+	cout << "0. finalizar." << endl << endl;
+
+	
+
+	cout << "digite o número relacionado a opção que deseja operar: ";
+
+	cin >> key;
+
+	
+
+	return key;
+
+}
+
+
+
+//Função primária.
+
+int main(int argc, char *argv[]){
+
+	//Declaração de variáveis.
+
+	int line;
+
+	int chair;
+
+	float fatura = 0;
+
+	
+
+	//Declaração de Array bidimencional.
+
+	char **spot;
+
+	
+
+	spot = (char**)malloc(LIN * sizeof(char));
+
+	
+
+	for(int i = 0; i<LIN; ++i){
+
+		spot[i] = (char*)malloc(COL * sizeof(char));
+
+	}
+
+	
+
+	//Atribuição de valores iniciais.
+
+ 	for(int i = 0;i<LIN; ++i){
+
+		 for(int j = 0; j<COL; ++j){
+
+			 spot[i][j] = '.';
+
+		}		
+
+	}
+
+	
+
+	//Escolha de função.
+
+	int key = home();
+
+	while(key != 0)
+
+	{
+
+		   switch(key){
+
+		   	//Reserva de cadeira.
+
+	    	case 1:
+
+			cout << "Escolha a fileira em que deseja se sentar (1 - 15): ";
+
+			cin >> line;
+
+			cout << "Escolha o número da cadeira em que deseja se sentar (1 - 40): ";
+
+			cin >> chair;
+
+			
+
+			//Reajuste de valor para compatibilidade do Array.
+
+			line -= 1;
+
+			chair -= 1;
+
+			
+
+			//Atribuição de valor para cadeira escolhida.
+
+			spot[line][chair] = '#';
+
+			
+
+			if(line<5){
+
+				fatura += 50;
+
+			}else if(line>4 && line<10){
+
+				fatura += 30;
+
+			}else if(line>9){
+
+				fatura += 15;
+
+			}
+
+			
+
+			cout << "A cadeira foi selecionada." << endl << endl;
+
+			
+
+			key = home();  	
+
+			break;
+
+
+
+			//Mapa da sala.
+
+			case 2:
+
+				
+
+			for(int i = 0; i<LIN; ++i){
+
+				for(int j = 0; j<COL; ++j){
+
+				cout << spot[i][j] << "|";
+
+				}
+
+				cout << endl;
+
+			}
+
+			cout << endl;
+
+			 
+
+			key = home();	
+
+			break; 
+
+		
+
+			//Fatura.
+
+			case 3:
+
+			cout << "A fatura atual é de: " << fatura << ",00R$" <<endl <<endl;   
+
+			key = home();	
+
+			break;    
+
+		   }	
+
+	}
+
+	cout << "Sessão finalizada";
+
+	
+
+	return 0;
+
+}
